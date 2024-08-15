@@ -9,10 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.3.1",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.7",
+    "firebase": "^10.13.0",
     "flashcards": "file:",
     "next": "14.2.5",
+    "openai": "^4.55.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "stripe": "^16.8.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
