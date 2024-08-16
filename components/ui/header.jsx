@@ -17,9 +17,24 @@ const Header = () => {
               </Typography>
             </Link>
           </Typography>
-          <Button color="inherit" component={Link} href="/login" sx={{ color: 'inherit', textDecoration: 'none' }}>
-            Log In
-          </Button>
+          <div>
+            <Button
+              color="inherit"
+              component={Link}
+              href="/pricing"
+              sx={{ color: 'inherit', textDecoration: 'none', mx: 4 }}
+            >
+              Pricing
+            </Button>
+            <Button
+              color="inherit"
+              component={Link}
+              href="/login"
+              sx={{ color: 'inherit', textDecoration: 'none' }}
+            >
+              Log In
+            </Button>
+          </div>
         </Container>
       </Toolbar>
     </AppBar>
