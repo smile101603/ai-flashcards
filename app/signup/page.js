@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, Grid } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase'; // Ensure correct import path
 
 const Signup = () => {
@@ -40,6 +40,28 @@ const Signup = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'black', // Text color
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'gray', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Border color when focused
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'gray', // Label color when not focused
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Label color when focused
+              },
+            }}
           />
           <TextField
             fullWidth
@@ -50,20 +72,41 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'black', // Text color
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'gray', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Border color when focused
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'gray', // Label color when not focused
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Label color when focused
+              },
+            }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, backgroundColor: "#241571" }}
           >
             Sign Up
           </Button>
         </form>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Button href="/login" variant="text">
+            <Button href="/login" variant="text" sx={{ color: "black" }}>
               Already have an account? Log in
             </Button>
           </Grid>
