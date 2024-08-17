@@ -39,6 +39,28 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'black', // Text color
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'gray', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Border color when focused
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'gray', // Label color when not focused
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Label color when focused
+              },
+            }}
           />
           <TextField
             fullWidth
@@ -49,20 +71,41 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            sx={{
+              '& .MuiInputBase-input': {
+                color: 'black', // Text color
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'gray', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'white', // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white', // Border color when focused
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'gray', // Label color when not focused
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', // Label color when focused
+              },
+            }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, backgroundColor: "#241571" }} // Apply same background color as Signup button
           >
             Log In
           </Button>
         </form>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Button href="/signup" variant="text">
+            <Button href="/signup" variant="text" sx={{ color: "black" }}>
               Don't have an account? Sign up
             </Button>
           </Grid>
