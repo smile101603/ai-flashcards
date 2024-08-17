@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@mui/material";
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import SlightFlip from '@/components/magicui/flip-text';
@@ -16,7 +17,7 @@ export default function Home() {
       );
     }, 7000);
 
-    return () => clearTimeout(timeout); 
+    return () => clearTimeout(timeout);
   }, [currentTaglineIndex]);
 
   return (
