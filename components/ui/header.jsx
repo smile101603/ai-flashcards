@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Container, Divider } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Divider,
+} from "@mui/material";
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../app/firebase"; // Adjust the path to firebase.js as needed
@@ -27,7 +34,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar sx={{backgroundColor: "#241571"}} position="sticky">
+    <AppBar sx={{ backgroundColor: "#241571" }} position="sticky">
       <Toolbar>
         <Container
           maxWidth="lg"
@@ -42,7 +49,7 @@ const Header = () => {
               AI Flashcards
             </Link>
           </Typography>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <Link href="/pricing" passHref>
               <Button
                 color="inherit"
@@ -52,6 +59,7 @@ const Header = () => {
               </Button>
             </Link>
             <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+
             {!user ? (
               <>
                 <Link href="/signup" passHref>
@@ -63,6 +71,7 @@ const Header = () => {
                   </Button>
                 </Link>
                 <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+
                 <Link href="/login" passHref>
                   <Button
                     color="inherit"
@@ -77,6 +86,15 @@ const Header = () => {
                 <Typography variant="body1" component="span" sx={{ mx: 2 }}>
                   Welcome, {user.email}
                 </Typography>
+                <Link href="/flashcards" passHref>
+                  <Button
+                    color="inherit"
+                    sx={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    Flashcards
+                  </Button>
+                </Link>
+                <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
                 <Button
                   color="inherit"
                   onClick={handleLogout}
