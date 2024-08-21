@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setError(null);
-      router.push('/'); // Redirect to the homepage after successful login
+      router.push('/generate'); // Redirect to the flashcards page
     } catch (error) {
       setError('Failed to login. Please check your credentials.');
     }
@@ -98,7 +98,7 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: "#241571" }} // Apply same background color as Signup button
+            sx={{ mt: 3, mb: 2, backgroundColor: "#241571" }}
           >
             Log In
           </Button>

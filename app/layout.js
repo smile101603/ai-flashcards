@@ -1,4 +1,3 @@
-// app/layout.js
 import './globals.css'; // Import global styles
 import Header from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
@@ -12,10 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <AppThemeProvider>
           <Header />
-          <main className="min-h-[82vh] max-h-[84vh] bg-gradient-to-b from-[#00b7ff] to-[#f8f8ff] flex items-center justify-center">
+          <main className="flex-grow bg-gradient-to-b from-[#00b7ff] to-[#f8f8ff] flex items-center justify-center">
             {children}
           </main>
           <Footer />
