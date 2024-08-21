@@ -10,9 +10,14 @@ import {
   Grid,
   Card,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { collection, doc, getDoc, setDoc, updateDoc, writeBatch } from 'firebase/firestore';
 
 const FlippableCard = styled(Card)(({ theme }) => ({
@@ -53,8 +58,10 @@ const CardBack = styled(CardFace)(({ theme }) => ({
 }));
 
 export default function Generate() {
-  const [text, setText] = useState("");
-  const [flashcards, setFlashcards] = useState([]);
+    const [text, setText] = useState("");
+    const [flashcards, setFlashcards] = useState([]);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [setName, setSetName] = useState("");
 
   const handleSubmit = async () => {
     if (!text.trim()) {
@@ -95,14 +102,20 @@ export default function Generate() {
     );
   };
 
+  const handleOpenDialog = () => setDialogOpen(true);
+  const handleCloseDialog = () => setDialogOpen(false);
+
+
   const saveFlashcards = async () => {
     if (!setName.trim()) {
       alert('Please enter a name for your flashcard set.');
       return;
     }
 
+    const user = auth.currentUser;
+
     try {
-      const userDocRef = doc(collection(db, 'users'), 'user-id'); // Replace 'user-id' with actual user ID
+      const userDocRef = doc(collection(db, 'users'), user.uid);
       const userDocSnap = await getDoc(userDocRef);
 
       const batch = writeBatch(db);
@@ -198,9 +211,38 @@ export default function Generate() {
                 </Grid>
               ))}
             </Grid>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              <Button variant="contained" color="primary" onClick={handleOpenDialog}>
+                Save Flashcards
+              </Button>
+            </Box>
           </Box>
         )}
       </Box>
+
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle>Save Flashcard Set</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter a name for your flashcard set.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Set Name"
+            type="text"
+            fullWidth
+            value={setName}
+            onChange={(e) => setSetName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={saveFlashcards} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
