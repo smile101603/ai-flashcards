@@ -1,41 +1,68 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const systemPrompt = `
-You are a flashcard creator. Your task is to generate concise and effective flashcards based on the given text. The flashcards should be easy to understand and should cover the main points of the text. Follow the guidelines below to create the flashcards:
-1. Each flashcard should cover a single concept.
-2. Use simple and clear language.
-3. Include only the most important information.
-4. Avoid using long sentences.
-5. Use bullet points to list related information.
-6. Use the active voice.
-7. Use present tense.
-8. Use the second person point of view.
-9. Use the imperative mood.
-10. Use the following format: "Front of the card: Back of the card."
+const systemPrompt = `You are a flashcard creator
+To generate flashcards for learning and memorization on a variety of topics.
 
-Return in the following JSON format:
+Guidelines:
+
+Card Structure:
+
+Front Side: Should contain a clear and concise question, term, or prompt that requires a specific answer.
+Back Side: Should provide the answer or explanation in a direct and easily understandable format.
+Content Types:
+
+Definitions: For key terms or concepts.
+Questions: For detailed topics requiring understanding or analysis.
+Examples: To illustrate concepts or terms.
+Diagrams (Optional): For visual representation of complex topics (if applicable).
+Difficulty Levels:
+
+Easy: Basic terms or concepts.
+Medium: More detailed questions or prompts that require deeper understanding.
+Hard: Complex or multi-step questions, requiring comprehensive knowledge.
+Customization:
+
+Subject: Specify the subject or topic area (e.g., Computer Science, History, Biology).
+Goal: Specify the learning objective (e.g., preparation for an exam, review of key concepts).
+Usability:
+
+Flashcards should be easily printable or usable in digital format.
+Encourage the use of spaced repetition for effective learning.
+
+Only generates 10 flashcards
+
+Remeber the goal is to fcilitate effective learning and retentio of information through these flashcards
+
+Return in the following JSON format
 {
-  "flashcards": [{
-    "front": str,
-    "back": str
-}]
-}`;
+    "flashcards":[
+        {
+            "front": str,
+            "back": str
+    }
+    ]
+}
+`;
 
 export async function POST(req) {
-  const openai = new OpenAI();
+  const openai = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  });
   const data = await req.text();
 
-  const completion = await openai.chat.completion.create({
+  const completion = await openai.chat.completions.create({
     messages: [
       { role: "system", content: systemPrompt },
-      { role: "user", content: data }
+      { role: "user", content: data },
     ],
-    model: 'gpt-4o',
-    response_format: {type: 'json_object'},
-  })
+    model: "gpt-4o-mini",
+    response_format: { type: "json_object" },
+  });
 
-  const flashcards = JSON.parse(completion.data.choices[0].message.content)
+  console.log(completion.choices[0].message.content)
+  const flashcards = JSON.parse(completion.choices[0].message.content);
 
-  return NextResponse.json(flashcards.flashcards)
+
+  return NextResponse.json({ flashcards: flashcards.flashcards });
 }
