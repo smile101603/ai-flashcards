@@ -12,6 +12,8 @@ import {
   CardContent,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { db } from '../firebase';
+import { collection, doc, getDoc, setDoc, updateDoc, writeBatch } from 'firebase/firestore';
 
 const FlippableCard = styled(Card)(({ theme }) => ({
   perspective: "1000px",
@@ -91,6 +93,40 @@ export default function Generate() {
         i === index ? { ...flashcard, flipped: !flashcard.flipped } : flashcard
       )
     );
+  };
+
+  const saveFlashcards = async () => {
+    if (!setName.trim()) {
+      alert('Please enter a name for your flashcard set.');
+      return;
+    }
+
+    try {
+      const userDocRef = doc(collection(db, 'users'), 'user-id'); // Replace 'user-id' with actual user ID
+      const userDocSnap = await getDoc(userDocRef);
+
+      const batch = writeBatch(db);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        const updatedSets = [...(userData.flashcardSets || []), { name: setName }];
+        batch.update(userDocRef, { flashcardSets: updatedSets });
+      } else {
+        batch.set(userDocRef, { flashcardSets: [{ name: setName }] });
+      }
+
+      const setDocRef = doc(collection(userDocRef, 'flashcardSets'), setName);
+      batch.set(setDocRef, { flashcards });
+
+      await batch.commit();
+
+      alert('Flashcards saved successfully!');
+      handleCloseDialog();
+      setSetName('');
+    } catch (error) {
+      console.error('Error saving flashcards:', error);
+      alert('An error occurred while saving flashcards. Please try again.');
+    }
   };
 
   return (
