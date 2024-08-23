@@ -13,7 +13,7 @@ const PricingPage = () => {
   const handleSubscribe = async (plan) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/generate/checkout_sessions', {
+      const response = await fetch('/api/checkout_sessions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
